@@ -14,7 +14,7 @@ char main_menu_screen(void)
     printf("###               Departamento de Computação e Tecnologia                   ###\n");
     printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
     printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
-    printf("###    Developed by https://github.com/Hildemberg986 -- since Aug, 2023     ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
@@ -44,7 +44,7 @@ void about_screen(void)
     printf("###               Departamento de Computação e Tecnologia                   ###\n");
     printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
     printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
-    printf("###    Developed by https://github.com/Hildemberg986 -- since Aug, 2023     ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
@@ -72,7 +72,7 @@ void team_screen(void)
     printf("###               Departamento de Computação e Tecnologia                   ###\n");
     printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
     printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
-    printf("###    Developed by https://github.com/Hildemberg986 -- since Aug, 2023     ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
@@ -103,7 +103,7 @@ char login_screen(void)
     printf("###               Departamento de Computação e Tecnologia                   ###\n");
     printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
     printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
-    printf("###    Developed by https://github.com/Hildemberg986 -- since Aug, 2023     ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
@@ -142,7 +142,7 @@ void registration_screen(void)
     printf("###               Departamento de Computação e Tecnologia                   ###\n");
     printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
     printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
-    printf("###    Developed by https://github.com/Hildemberg986 -- since Aug, 2023     ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
@@ -179,7 +179,7 @@ bool login_client(void)
     printf("###               Departamento de Computação e Tecnologia                   ###\n");
     printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
     printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
-    printf("###    Developed by https://github.com/Hildemberg986 -- since Aug, 2023     ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
