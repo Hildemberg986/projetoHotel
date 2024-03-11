@@ -1,7 +1,5 @@
 #include "screens.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+
 char main_menu_screen(void)
 {
     char option;
@@ -50,7 +48,7 @@ void about_screen(void)
     printf("###                                                                         ###\n");
     printf("###                         |=====- Sobre -=====|                           ###\n");
     printf("###                                                                         ###\n");
-    printf("###  Um  Sistema  comercial  para a  gestão de  um hotel. Desenvolvido  na   1###\n");
+    printf("###  Um  Sistema  comercial  para a  gestão de  um hotel. Desenvolvido  na  ###\n");
     printf("###  materia  DCT1106 - PROGRAMAÇÃO com  o  intuito  avaliativo  sobre  os  ###\n");
     printf("###  alunos para testar a compreenção e conhecimentos  em  programação  do  ###\n");
     printf("###  desenvolvedor, tendo uma natureza estritamente acadêmica.              ###\n");
@@ -157,7 +155,7 @@ void registration_screen(void)
     printf("###   --> Digite o email do Cliente... ");
     scanf("%100[^\n]", pessoa1.email);
     getchar();
-     printf("###   --> Digite uma senha de login... ");
+    printf("###   --> Digite uma senha de login... ");
     scanf("%12[^\n]", pessoa1.password);
     getchar();
     printf("\n");

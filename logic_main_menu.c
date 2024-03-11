@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "screens.h"
 #include "logic_main_menu.h"
 
 void logic_main_menu(char option)
@@ -8,7 +5,7 @@ void logic_main_menu(char option)
     switch (option)
     {
     case '1':
-        login_screen();
+        logic_login();
         break;
     case '2':
         about_screen();
