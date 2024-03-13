@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include "screens.h"
 #include "logic_main_menu.h"
 /////
