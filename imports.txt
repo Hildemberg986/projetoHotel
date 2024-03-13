@@ -2,3 +2,5 @@ main.c
 logic_main_menu.c
 screens.c
 logic_login.c
+client_screens.c
+logic_client.c
