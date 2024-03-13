@@ -2,6 +2,8 @@
 
 void logic_login()
 {
+    bool validation = true;
+
     char option;
     do
     {
@@ -10,9 +12,14 @@ void logic_login()
         {
         case '1':
             login_client();
+            if (validation)
+            {
+                logic_client();
+            }
+
             break;
         case '2':
-            registration_screen();
+            registration_login_screen();
             break;
         case '0':
             break;
