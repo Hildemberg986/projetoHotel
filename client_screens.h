@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 void register_client_screen(void);
+void edit_client_screen(void);
+void delete_client_screen(void);
+void read_client_screen(void);
 struct register_client
 {
     char name[99];
