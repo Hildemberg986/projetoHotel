@@ -215,3 +215,33 @@ char login_screen_client(void)
     getchar();
     return option;
 }
+char client_menu(void){
+    char option;
+    system("clear||cls");
+    printf("\n");
+    printf("###############################################################################\n");
+    printf("###                                                                         ###\n");
+    printf("###             Universidade Federal do Rio Grande do Norte                 ###\n");
+    printf("###                 Centro de Ensino Superior do Seridó                     ###\n");
+    printf("###               Departamento de Computação e Tecnologia                   ###\n");
+    printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
+    printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
+    printf("###                                                                         ###\n");
+    printf("###############################################################################\n");
+    printf("###                                                                         ###\n");
+    printf("###                      |=====- Menu  Cliente -=====|                      ###\n");
+    printf("###                                                                         ###\n");
+    printf("###                          1-> Cadastrar Cliente                          ###\n");
+    printf("###                          2-> Editar Cliente                             ###\n");
+    printf("###                          3-> Excluir Cliente                            ###\n");
+    printf("###                          4-> Pesquisar Cliente                          ###\n");
+    printf("###                          0-> Sair                                       ###\n");
+    printf("###                                                                         ###\n");
+    printf("###############################################################################\n");
+    printf("\n");
+    printf("###  Digite a opção desejada e Tecle <ENTER> para continuar... ");
+    scanf(" %c", &option);
+    getchar();
+    return option;
+}

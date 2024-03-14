@@ -11,6 +11,7 @@ void registration_login_screen(void);
 bool login_client(void);
 void login_admin(void);
 void client_sale(void);
+char client_menu(void);
 
 struct registration_login
 {
