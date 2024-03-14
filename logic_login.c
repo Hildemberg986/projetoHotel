@@ -14,7 +14,7 @@ void logic_login()
             login_client();
             if (validation)
             {
-                logic_client();
+                logic_menu_modules();
             }
 
             break;

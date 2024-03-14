@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "screens.h"
-#include "logic_client.h"
-void logic_client();
+#include "logic_menu_modules.h"
+void logic_menu_modules();
 void logic_login();
 char login_screen_client();
 #endif
