@@ -10,10 +10,9 @@ void logic_menu_modules()
         switch (option)
         {
         case '1':
-
             break;
         case '2':
-            client_menu();
+            logic_menu_client();
             break;
         case '0':
             break;
