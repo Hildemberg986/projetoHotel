@@ -1,7 +1,5 @@
 #include "screens.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+
 char main_menu_screen(void)
 {
     char option;
@@ -50,7 +48,7 @@ void about_screen(void)
     printf("###                                                                         ###\n");
     printf("###                         |=====- Sobre -=====|                           ###\n");
     printf("###                                                                         ###\n");
-    printf("###  Um  Sistema  comercial  para a  gestão de  um hotel. Desenvolvido  na   1###\n");
+    printf("###  Um  Sistema  comercial  para a  gestão de  um hotel. Desenvolvido  na  ###\n");
     printf("###  materia  DCT1106 - PROGRAMAÇÃO com  o  intuito  avaliativo  sobre  os  ###\n");
     printf("###  alunos para testar a compreenção e conhecimentos  em  programação  do  ###\n");
     printf("###  desenvolvedor, tendo uma natureza estritamente acadêmica.              ###\n");
@@ -107,10 +105,10 @@ char login_screen(void)
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
-    printf("###                         |=====- Login -=====|                           ###\n");
+    printf("###                     |=====- Menu de Login -=====|                       ###\n");
     printf("###                                                                         ###\n");
-    printf("###                       1-> Logar como Cliente                            ###\n");
-    printf("###                       2-> Cadastrar Novo Cliente                        ###\n");
+    printf("###                       1-> Fazer Login                                   ###\n");
+    printf("###                       2-> Cadastrar Novo login                          ###\n");
     printf("###                       0-> Voltar                                        ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
@@ -121,17 +119,9 @@ char login_screen(void)
     return option;
 }
 
-void registration_screen(void)
+void registration_login_screen(void)
 {
-    struct pessoa
-    {
-        char name[99];
-        char cpf[12];
-        char email[100];
-        char password[100];
-    };
-
-    struct pessoa pessoa1;
+    struct registration_login pessoa;
 
     system("clear||cls");
     printf("\n");
@@ -149,16 +139,16 @@ void registration_screen(void)
     printf("###                        |=====- Cadastro -=====|                         ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o Nome do Cliente... ");
-    scanf("%99[^\n]", pessoa1.name);
+    scanf("%99[^\n]", pessoa.name);
     getchar();
     printf("###   --> Digite o CPF do Cliente... ");
-    scanf("%12[^\n]", pessoa1.cpf);
+    scanf("%12[^\n]", pessoa.cpf);
     getchar();
     printf("###   --> Digite o email do Cliente... ");
-    scanf("%100[^\n]", pessoa1.email);
+    scanf("%100[^\n]", pessoa.email);
     getchar();
-     printf("###   --> Digite uma senha de login... ");
-    scanf("%12[^\n]", pessoa1.password);
+    printf("###   --> Digite uma senha de login... ");
+    scanf("%12[^\n]", pessoa.password);
     getchar();
     printf("\n");
 }
@@ -183,7 +173,7 @@ bool login_client(void)
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
     printf("###                                                                         ###\n");
-    printf("###                      |=====- Login Client -=====|                       ###\n");
+    printf("###                         |=====- Login -=====|                           ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o CPF do Cliente... ");
     scanf("%12[^\n]", cpf);
@@ -193,4 +183,35 @@ bool login_client(void)
     getchar();
     printf("\n");
     return valitation;
+}
+
+char modules_screen(void)
+{
+    char option;
+    system("clear||cls");
+    printf("\n");
+    printf("###############################################################################\n");
+    printf("###                                                                         ###\n");
+    printf("###             Universidade Federal do Rio Grande do Norte                 ###\n");
+    printf("###                 Centro de Ensino Superior do Seridó                     ###\n");
+    printf("###               Departamento de Computação e Tecnologia                   ###\n");
+    printf("###                  Disciplina DCT1106 -- Programação                      ###\n");
+    printf("###             Projeto Um Sistema de Gestão para um Hotel                  ###\n");
+    printf("###    Developed by https://github.com/Hildemberg986 -- since Mar, 2024     ###\n");
+    printf("###                                                                         ###\n");
+    printf("###############################################################################\n");
+    printf("###                                                                         ###\n");
+    printf("###                     |=====- Menu de Modulos -=====|                     ###\n");
+    printf("###                                                                         ###\n");
+    printf("###                       1-> Quartos                                       ###\n");
+    printf("###                       2-> Clientes                                      ###\n");
+    printf("###                       3-> Reservas                                      ###\n");
+    printf("###                       0-> Voltar                                        ###\n");
+    printf("###                                                                         ###\n");
+    printf("###############################################################################\n");
+    printf("\n");
+    printf("###  Digite a opção desejada e Tecle <ENTER> para continuar... ");
+    scanf(" %c", &option);
+    getchar();
+    return option;
 }

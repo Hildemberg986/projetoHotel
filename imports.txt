@@ -1,3 +1,11 @@
 main.c
-logic_main_menu.c
+
 screens.c
+client_screens.c
+roons_screens.c
+
+logic_main_menu.c
+logic_login.c
+logic_menu_modules.c
+logic_menu_client.c
+logic_menu_roons.c

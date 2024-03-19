@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
-#include "screens.h"
-#include "logic_main_menu.h"
+#include "./screens/screens.h"
+#include "./logic/logic_main_menu.h"
 /////
 // Programa principal
 int main(void)
