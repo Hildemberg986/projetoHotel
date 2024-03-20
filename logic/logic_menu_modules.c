@@ -16,7 +16,7 @@ void logic_menu_modules()
             logic_menu_client();
             break;
         case '3':
-            // reservas
+            logic_menu_reservation();
             break;
         case '0':
             break;

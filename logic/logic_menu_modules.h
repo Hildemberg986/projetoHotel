@@ -5,5 +5,6 @@
 #include "../logic/logic_menu_client.h"
 void logic_menu_client();
 void logic_menu_roons();
+void logic_menu_reservation();
 char modules_screen();
 #endif
