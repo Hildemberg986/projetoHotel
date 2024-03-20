@@ -1,9 +1,11 @@
 main.c
 
+reservation_screens.c
 screens.c
 client_screens.c
 roons_screens.c
 
+logic_menu_reservation.c
 logic_main_menu.c
 logic_login.c
 logic_menu_modules.c
