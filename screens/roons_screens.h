@@ -7,6 +7,7 @@ void register_roons_screen(void);
 void edit_roons_screen(void);
 void delete_roons_screen(void);
 void read_roons_screen(void);
+char room_menu(void);
 struct register_room
 {
     char number[99];

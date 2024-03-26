@@ -23,7 +23,10 @@ void logic_menu_client()
         case '0':
             break;
         default:
+            system("clear||cls");
             printf("\t\t\tOpção inválida. Tente novamente.\n");
+            clean_buffer();
+            sleep_code(2);
         }
     } while (option != '0');
 }

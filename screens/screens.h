@@ -9,10 +9,7 @@ void team_screen(void);
 char login_screen(void);
 void registration_login_screen(void);
 bool login_client(void);
-void login_admin(void);
-void client_sale(void);
-char client_menu(void);
-
+char modules_screen(void);
 struct registration_login
 {
     char name[99];
