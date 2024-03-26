@@ -17,10 +17,10 @@ char reservation_menu(void){
     printf("###                                                                         ###\n");
     printf("###                     |=====- Menu  Reservas -=====|                      ###\n");
     printf("###                                                                         ###\n");
-    printf("###                          1-> Cadastrar Rerserva                         ###\n");
-    printf("###                          2-> Editar Rerserva                            ###\n");
-    printf("###                          3-> Excluir Rerserva                           ###\n");
-    printf("###                          4-> Pesquisar Rerserva                         ###\n");
+    printf("###                          1-> Cadastrar Reserva                          ###\n");
+    printf("###                          2-> Editar Reserva                             ###\n");
+    printf("###                          3-> Excluir Reserva                            ###\n");
+    printf("###                          4-> Pesquisar Reserva                          ###\n");
     printf("###                          0-> Sair                                       ###\n");
     printf("###                                                                         ###\n");
     printf("###############################################################################\n");
