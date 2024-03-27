@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "../function/utility_functions.h"
 void register_client_screen(void);
 void edit_client_screen(void);
 void delete_client_screen(void);
