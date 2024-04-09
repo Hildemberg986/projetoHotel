@@ -4,15 +4,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "../function/utility_functions.h"
+
+typedef struct register_client
+{
+    char name[99];
+    char cpf[12];
+    char fone[20];
+} Client;
+
 void register_client_screen(void);
 void edit_client_screen(void);
 void delete_client_screen(void);
 void read_client_screen(void);
 char client_menu(void);
-struct register_client
-{
-    char name[99];
-    char cpf[12];
-    char fone[20];
-};
+
 #endif

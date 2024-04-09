@@ -34,8 +34,8 @@ char client_menu(void)
 
 void register_client_screen(void)
 {
-    struct register_client pessoa;
-    bool primeiro = true;
+    Client pessoa;
+    bool first = true;
     int cpf_valido = false;
 
     system("clear||cls");
@@ -67,13 +67,13 @@ void register_client_screen(void)
 
         if (!cpf_valido)
         {
-            if (!primeiro)
+            if (!first)
                 clear_last_lines(2);
             else
                 clear_last_lines(1);
             printf("\t\t\tCPF inválido. Por favor, digite novamente.\n");
         }
-        primeiro = false;
+        first = false;
     } while (!cpf_valido);
     printf("###   --> Digite o telefone do Cliente... ");
     scanf("%100[^\n]", pessoa.fone);
@@ -82,7 +82,7 @@ void register_client_screen(void)
 
 void edit_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
 
     system("clear||cls");
     printf("\n");
@@ -105,7 +105,7 @@ void edit_client_screen(void)
 }
 void delete_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
 
     system("clear||cls");
     printf("\n");
@@ -128,7 +128,7 @@ void delete_client_screen(void)
 }
 void read_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
 
     system("clear||cls");
     printf("\n");

@@ -33,7 +33,7 @@ char reservation_menu(void){
 
 void register_reservation_screen(void)
 {
-    struct register_reservation reservation;
+    Reservation reservation;
 
     system("clear||cls");
     printf("\n");
@@ -66,7 +66,7 @@ void register_reservation_screen(void)
 
 void edit_reservation_screen(void)
 {
-    struct register_reservation reservation;
+    Reservation reservation;
 
     system("clear||cls");
     printf("\n");
@@ -89,7 +89,7 @@ void edit_reservation_screen(void)
 }
 void delete_reservation_screen(void)
 {
-    struct register_reservation reservation;
+    Reservation reservation;
 
     system("clear||cls");
     printf("\n");
@@ -112,7 +112,7 @@ void delete_reservation_screen(void)
 }
 void read_reservation_screen(void)
 {
-    struct register_reservation reservation;
+    Reservation reservation;
 
     system("clear||cls");
     printf("\n");

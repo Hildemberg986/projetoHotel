@@ -33,7 +33,7 @@ char room_menu(void){
 
 void register_roons_screen(void)
 {
-    struct register_room room;
+    Room room;
 
     system("clear||cls");
     printf("\n");
@@ -66,7 +66,7 @@ void register_roons_screen(void)
 
 void edit_roons_screen(void)
 {
-    struct register_room room;
+    Room room;
 
     system("clear||cls");
     printf("\n");
@@ -89,7 +89,7 @@ void edit_roons_screen(void)
 }
 void delete_roons_screen(void)
 {
-    struct register_room room;
+    Room room;
 
     system("clear||cls");
     printf("\n");
@@ -112,7 +112,7 @@ void delete_roons_screen(void)
 }
 void read_roons_screen(void)
 {
-    struct register_room room;
+    Room room;
 
     system("clear||cls");
     printf("\n");
