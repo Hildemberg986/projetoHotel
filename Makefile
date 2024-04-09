@@ -46,4 +46,4 @@ $(TARGET): $(OBJS)
 cleanunix:
 	rm -f $(OBJS)
 cleanwindows:
-	del /Q $(OBJS)
+	del $(subst /,\,$(OBJS))
