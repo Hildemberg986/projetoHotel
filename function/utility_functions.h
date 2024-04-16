@@ -9,4 +9,5 @@ void sleep_code(int seconds);
 void clean_buffer();
 bool valida_cpf(const char *imputCPF);
 void clear_last_lines(int n);
+char read_cpf(char *cpf);
 #endif

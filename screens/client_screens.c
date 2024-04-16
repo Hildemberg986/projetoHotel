@@ -35,8 +35,7 @@ char client_menu(void)
 void register_client_screen(void)
 {
     Client pessoa;
-    bool first = true;
-    int cpf_valido = false;
+
 
     system("clear||cls");
     printf("\n");
@@ -56,25 +55,7 @@ void register_client_screen(void)
     printf("###   --> Digite o Nome do Cliente... ");
     scanf("%99[^\n]", pessoa.name);
     getchar();
-    do
-    {
-        printf("###   --> Digite o CPF do Cliente... ");
-        scanf("%12[^\n]", pessoa.cpf);
-        getchar();
-
-        // Chama a função para validar o CPF
-        cpf_valido = valida_cpf(pessoa.cpf);
-
-        if (!cpf_valido)
-        {
-            if (!first)
-                clear_last_lines(2);
-            else
-                clear_last_lines(1);
-            printf("\t\t\tCPF inválido. Por favor, digite novamente.\n");
-        }
-        first = false;
-    } while (!cpf_valido);
+    read_cpf(pessoa.cpf);
     printf("###   --> Digite o telefone do Cliente... ");
     scanf("%100[^\n]", pessoa.fone);
     getchar();
