@@ -1,5 +1,5 @@
 #include "client_screens.h"
-
+extern Client clients[];
 char client_menu(void)
 {
     char option;
@@ -59,6 +59,7 @@ void register_client_screen(void)
     printf("###   --> Digite o telefone do Cliente... ");
     scanf("%100[^\n]", pessoa.fone);
     getchar();
+    add_client(clients,pessoa);
 }
 
 void edit_client_screen(void)
