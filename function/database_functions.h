@@ -13,4 +13,5 @@ typedef struct register_client
 } Client;
 
 void add_client(Client clients[], Client new_client);
+void salvarClientes(const char *nomeArquivo, Client clients[]);
 #endif
