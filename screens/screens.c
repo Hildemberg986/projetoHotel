@@ -121,7 +121,7 @@ char login_screen(void)
 
 void registration_login_screen(void)
 {
-    struct registration_login pessoa;
+    Login pessoa;
 
     system("clear||cls");
     printf("\n");

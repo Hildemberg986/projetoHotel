@@ -1,6 +1,7 @@
 #include "client_screens.h"
 
-char client_menu(void){
+char client_menu(void)
+{
     char option;
     system("clear||cls");
     printf("\n");
@@ -33,7 +34,8 @@ char client_menu(void){
 
 void register_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
+
 
     system("clear||cls");
     printf("\n");
@@ -53,18 +55,15 @@ void register_client_screen(void)
     printf("###   --> Digite o Nome do Cliente... ");
     scanf("%99[^\n]", pessoa.name);
     getchar();
-    printf("###   --> Digite o CPF do Cliente... ");
-    scanf("%12[^\n]", pessoa.cpf);
-    getchar();
+    read_cpf(pessoa.cpf);
     printf("###   --> Digite o telefone do Cliente... ");
     scanf("%100[^\n]", pessoa.fone);
     getchar();
-    printf("\n");
 }
 
 void edit_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
 
     system("clear||cls");
     printf("\n");
@@ -87,7 +86,7 @@ void edit_client_screen(void)
 }
 void delete_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
 
     system("clear||cls");
     printf("\n");
@@ -110,7 +109,7 @@ void delete_client_screen(void)
 }
 void read_client_screen(void)
 {
-    struct register_client pessoa;
+    Client pessoa;
 
     system("clear||cls");
     printf("\n");
