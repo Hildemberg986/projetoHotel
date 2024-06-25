@@ -5,7 +5,7 @@
 #include "./screens/client_screens.h"
 /////
 // Programa principal
-Client clients[10];
+
 
 int main(void)
 {

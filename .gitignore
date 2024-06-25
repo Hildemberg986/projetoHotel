@@ -23,6 +23,7 @@
 *.a
 *.la
 *.lo
+*.db
 
 # Shared objects (inc. Windows DLLs)
 *.dll

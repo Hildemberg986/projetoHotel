@@ -12,6 +12,7 @@ typedef struct register_client
     char fone[20];
 } Client;
 
-void add_client(Client clients[], Client new_client);
-void salvarClientes(const char *nomeArquivo, Client clients[]);
+void add_client(Client new_client);
+void save_file_client(const char *nomeArquivo, Client new_client);
+void load_file_client(const char *nomeArquivo);
 #endif
