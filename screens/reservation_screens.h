@@ -3,15 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-typedef struct register_reservation
-{
-    char number[99];
-    char day_enter[99];
-    char day_exit[99];
-    char client_cpf[12];
-}Reservation;
-
+#include "../function/database_functions.h"
 void register_reservation_screen(void);
 void edit_reservation_screen(void);
 void delete_reservation_screen(void);
