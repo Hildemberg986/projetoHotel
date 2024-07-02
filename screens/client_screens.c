@@ -1,5 +1,4 @@
 #include "client_screens.h"
-
 char client_menu(void)
 {
     char option;
@@ -36,7 +35,6 @@ void register_client_screen(void)
 {
     Client pessoa;
 
-
     system("clear||cls");
     printf("\n");
     printf("###############################################################################\n");
@@ -59,6 +57,7 @@ void register_client_screen(void)
     printf("###   --> Digite o telefone do Cliente... ");
     scanf("%100[^\n]", pessoa.fone);
     getchar();
+    save_file_client(pessoa);
 }
 
 void edit_client_screen(void)
@@ -109,7 +108,7 @@ void delete_client_screen(void)
 }
 void read_client_screen(void)
 {
-    Client pessoa;
+    char cpf [12];
 
     system("clear||cls");
     printf("\n");
@@ -127,6 +126,8 @@ void read_client_screen(void)
     printf("###                  |=====- Pesquisa de Cliente -=====|                    ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o CPF do Cliente para Pesquisar... ");
-    scanf("%12[^\n]", pessoa.cpf);
+    scanf("%12[^\n]", cpf);
+    getchar();
+    search_client_cpf(cpf, false);
     getchar();
 }

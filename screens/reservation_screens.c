@@ -61,7 +61,7 @@ void register_reservation_screen(void)
     printf("###   --> Digite o CPF do Cliente Que Reservou... ");
     scanf("%99[^\n]", reservation.client_cpf);
     getchar();
-    printf("\n");
+    save_file_reservation(reservation);
 }
 
 void edit_reservation_screen(void)
@@ -112,7 +112,7 @@ void delete_reservation_screen(void)
 }
 void read_reservation_screen(void)
 {
-    Reservation reservation;
+    char cpf[12];
 
     system("clear||cls");
     printf("\n");
@@ -129,7 +129,9 @@ void read_reservation_screen(void)
     printf("###                                                                         ###\n");
     printf("###                    |=====- Pesquisar Reserva -=====|                    ###\n");
     printf("###                                                                         ###\n");
-    printf("###   --> Digite o Numero do Quarto para Pesquisar as Reservas... ");
-    scanf("%12[^\n]", reservation.number);
+    printf("###   --> Digite o CPF da pessoa para Pesquisar as Reservas... ");
+    scanf("%12[^\n]", cpf);
+    getchar();
+    search_reservation(cpf);
     getchar();
 }
