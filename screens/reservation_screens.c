@@ -1,6 +1,7 @@
 #include "reservation_screens.h"
 
-char reservation_menu(void){
+char reservation_menu(void)
+{
     char option;
     system("clear||cls");
     printf("\n");
@@ -112,6 +113,8 @@ void delete_reservation_screen(void)
 }
 void read_reservation_screen(void)
 {
+    Client *load_client_copy;
+    Reservation *load_reservation_copy;
     char cpf[12];
 
     system("clear||cls");
@@ -132,6 +135,25 @@ void read_reservation_screen(void)
     printf("###   --> Digite o CPF da pessoa para Pesquisar as Reservas... ");
     scanf("%12[^\n]", cpf);
     getchar();
-    search_reservation(cpf);
+    load_client_copy = search_client_cpf(cpf);
+    load_reservation_copy = search_reservation(cpf);
+    if (load_client_copy != NULL && load_reservation_copy != NULL)
+    {
+        // Imprime os dados buscados na tela 
+        printf("Name: %s\n", load_client_copy->name);
+        printf("Número de telefone: %s\n", load_client_copy->fone);
+        printf("Número do quarto: %s\n", load_reservation_copy->number);
+        printf("Check in: %s\n", load_reservation_copy->day_enter);
+        printf("Check out: %s\n", load_reservation_copy->day_exit);
+        
+        // Libera o valor reservado na memoria
+        free(load_client_copy);
+        free(load_reservation_copy);
+    }
+    else
+    {
+        printf("Client not found or memory allocation failed.\n");
+    }
+    
     getchar();
 }

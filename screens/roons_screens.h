@@ -3,14 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-typedef struct register_room
-{
-    char number[99];
-    char type[99];
-    char value[99];
-    char quantity[99];
-}Room;
+#include "../function/database_functions.h"
 
 void register_roons_screen(void);
 void edit_roons_screen(void);

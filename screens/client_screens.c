@@ -108,7 +108,9 @@ void delete_client_screen(void)
 }
 void read_client_screen(void)
 {
-    char cpf [12];
+    Client *load_client_copy;
+
+    char cpf[12];
 
     system("clear||cls");
     printf("\n");
@@ -128,6 +130,18 @@ void read_client_screen(void)
     printf("###   --> Digite o CPF do Cliente para Pesquisar... ");
     scanf("%12[^\n]", cpf);
     getchar();
-    search_client_cpf(cpf, false);
+    load_client_copy = search_client_cpf(cpf);
+    if (load_client_copy != NULL)
+    {
+        // Use a variável load_client_copy, por exemplo, imprimindo seus dados
+        printf("CPF: %s\n", load_client_copy->cpf);
+        printf("Name: %s\n", load_client_copy->name);
+        printf("Phone: %s\n", load_client_copy->fone);
+        free(load_client_copy);
+    }
+    else
+    {
+        printf("Client not found or memory allocation failed.\n");
+    }
     getchar();
 }
