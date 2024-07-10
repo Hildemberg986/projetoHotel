@@ -4,7 +4,16 @@
 #else
 #include <unistd.h>
 #endif
+void initial_files(){
 
+    FILE *arquivo1 = fopen("roons.db", "ab");
+    fclose(arquivo1);
+    FILE *arquivo2 = fopen("reservas.db", "ab");
+    fclose(arquivo2);
+    FILE *arquivo3 = fopen("clientes.db", "ab");
+    fclose(arquivo3);
+
+}
 // Retirado do chatGPT
 void clean_buffer()
 {
