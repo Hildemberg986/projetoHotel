@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "../function/database_functions.h"
-
 void register_roons_screen(void);
 void edit_roons_screen(void);
 void delete_roons_screen(void);

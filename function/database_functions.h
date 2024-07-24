@@ -11,6 +11,7 @@ typedef struct register_client
     char name[99];
     char cpf[12];
     char fone[20];
+    bool del;
 } Client;
 
 typedef struct register_reservation
@@ -19,6 +20,7 @@ typedef struct register_reservation
     char day_enter[99];
     char day_exit[99];
     char client_cpf[12];
+    bool del;
 }Reservation;
 
 typedef struct register_room
@@ -27,11 +29,14 @@ typedef struct register_room
     char type[99];
     char value[99];
     char quantity[99];
+    bool del;
 }Room;
 
 void save_file_client(Client new_client);
 void load_file_client();
 Reservation *search_reservation(const char *cpf);
-void save_file_reservation(Reservation new_reservation);
+Room *search_room(const char *number);
 Client *search_client_cpf(const char *cpf);
+void save_file_reservation(Reservation new_reservation);
+void save_file_room(Room new_room);
 #endif

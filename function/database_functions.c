@@ -1,5 +1,6 @@
 #include "database_functions.h"
 
+//----------------------------------------cliente--------------------------------------------------
 void save_file_client(Client new_client)
 {
     // Abre o arquivo e define um ponteiro para o mesmo
@@ -147,36 +148,32 @@ void save_file_room(Room new_room)
     }
 }
 
-void search_room(const char *cpf)
+Room *search_room(const char *number)
 {
     // Abre o arquivo para escrita binária e define um ponteiro para o mesmo
     FILE *arquivo = fopen("roons.db", "rb");
-
     if (arquivo != NULL)
     {
-        Reservation loaded_reservation;
+        Room *loaded_room_copy;
+
+        loaded_room_copy = (Room*) malloc(sizeof(Room));
 
         // Lê enquanto conseguir ler reservas no arquivo e o valor for diferete de 1
-        while (fread(&loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
+        while (fread(loaded_room_copy, sizeof(Room), 1, arquivo) == 1)
         {
             // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
-            if (strcmp(cpf, loaded_reservation.client_cpf) == 0)
+            if (strcmp(number, loaded_room_copy->number) == 0)
             {
-                // Busca o nome do cliente ao qual o CPF esta vinculado e armazena em um ponteiro constante
-                const Client *copy_client = search_client_cpf(cpf);
-
-                // Exibe os dados da reserva e o nome da pessoa que reservou
-                printf("Reserva %s:\n", loaded_reservation.number);
-                printf("Nome: %s\n", copy_client->name);
-                printf("Dia de Entrada: %s\n", loaded_reservation.day_enter);
-                printf("Dia de Sáida: %s\n", loaded_reservation.day_exit);
+                return loaded_room_copy;
             }
         }
         // Fecha o arquivo aberto
         fclose(arquivo);
+        return NULL;
     }
     else
     {
         printf("Erro ao abrir o arquivo para leitura.\n");
+        return NULL;
     }
 }

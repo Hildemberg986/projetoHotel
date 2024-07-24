@@ -4,6 +4,8 @@
 #else
 #include <unistd.h>
 #endif
+
+
 void initial_files(){
 
     FILE *arquivo1 = fopen("roons.db", "ab");
@@ -14,6 +16,8 @@ void initial_files(){
     fclose(arquivo3);
 
 }
+
+
 // Retirado do chatGPT
 void clean_buffer()
 {
@@ -21,6 +25,7 @@ void clean_buffer()
     while ((c = getchar()) != '\n' && c != EOF)
         ;
 }
+
 
 void sleep_code(int seconds)
 {
@@ -30,6 +35,7 @@ void sleep_code(int seconds)
     sleep(seconds);
 #endif
 }
+
 
 bool valida_cpf(const char *imputCPF)
 {

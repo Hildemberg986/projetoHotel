@@ -157,7 +157,7 @@ bool login_client(void)
 {
 
     char password[100];
-    char cpf[12];
+    char cpf[14];
     bool valitation = false;
 
     system("clear||cls");
@@ -179,7 +179,7 @@ bool login_client(void)
     scanf("%12[^\n]", cpf);
     getchar();
     printf("###   --> Digite a senha... ");
-    scanf("%99[^\n]", password);
+    scanf("%98[^\n]", password);
     getchar();
     printf("\n");
     return valitation;
