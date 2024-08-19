@@ -39,7 +39,7 @@ Reservation *search_reservation(const char *cpf);
 Room *search_room(const char *number);
 Client *search_client_cpf(const char *cpf);
 void save_file_reservation(Reservation new_reservation);
-void edit_reservation(Reservation old_reservation, Reservation new_reservation)
+void edit_reservation(Reservation old_reservation, Reservation new_reservation);
 void save_file_room(Room new_room);
 
 #endif
