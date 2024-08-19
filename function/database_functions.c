@@ -79,6 +79,30 @@ Client *search_client_cpf(const char *cpf)
     }
 }
 
+void edit_client(Client old_client, Client new_client)
+{
+    FILE *arquivo = fopen("clientes.db", "rb+");
+
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return;
+    }
+
+    Client client;
+
+    while (fread(&client, sizeof(Client), 1, arquivo) == 1) {
+        if (strcmp(client.cpf, old_client.cpf) == 0) {
+            // Mover o ponteiro de volta para o início do registro encontrado
+            fseek(arquivo, -sizeof(Client), SEEK_CUR);
+            // Escrever o novo cliente no lugar do antigo
+            fwrite(&new_client, sizeof(Client), 1, arquivo);
+            break;
+        }
+    }
+
+    fclose(arquivo);
+}
+
 //----------------------------------------------- Reservas ------------------------------------------------------
 
 void save_file_reservation(Reservation new_reservation)
@@ -156,7 +180,7 @@ Room *search_room(const char *number)
     {
         Room *loaded_room_copy;
 
-        loaded_room_copy = (Room*) malloc(sizeof(Room));
+        loaded_room_copy = (Room *)malloc(sizeof(Room));
 
         // Lê enquanto conseguir ler reservas no arquivo e o valor for diferete de 1
         while (fread(loaded_room_copy, sizeof(Room), 1, arquivo) == 1)

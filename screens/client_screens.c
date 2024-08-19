@@ -62,6 +62,8 @@ void register_client_screen(void)
 
 void edit_client_screen(void)
 {
+    char cpf[12];
+    Client *load_client_copy;
     Client pessoa;
 
     system("clear||cls");
@@ -80,8 +82,31 @@ void edit_client_screen(void)
     printf("###                   |=====- Edição de Cliente -=====|                     ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o CPF do Cliente para Editar... ");
-    scanf("%12[^\n]", pessoa.cpf);
+    scanf("%12[^\n]", cpf);
     getchar();
+    load_client_copy = search_client_cpf(cpf);
+    if (load_client_copy != NULL)
+    {
+        // Use a variável load_client_copy, por exemplo, imprimindo seus dados
+        printf("CPF: %s\n", load_client_copy->cpf);
+        printf("Name: %s\n", load_client_copy->name);
+        printf("Phone: %s\n", load_client_copy->fone);
+        free(load_client_copy);
+    }
+    else
+    {
+        printf("Client not found or memory allocation failed.\n");
+    }
+    getchar();
+    
+    printf("###   --> Digite o Novo Nome do Cliente... ");
+    scanf("%99[^\n]", pessoa.name);
+    getchar();
+    read_cpf(pessoa.cpf);
+    printf("###   --> Digite o Novo Telefone do Cliente... ");
+    scanf("%100[^\n]", pessoa.fone);
+    getchar();
+    edit_client(*load_client_copy, pessoa);
 }
 void delete_client_screen(void)
 {
