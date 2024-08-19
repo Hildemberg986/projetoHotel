@@ -61,12 +61,16 @@ void register_reservation_screen(void)
     getchar();
     printf("###   --> Digite o CPF do Cliente Que Reservou... ");
     scanf("%99[^\n]", reservation.client_cpf);
+    reservation.del = false;
     getchar();
     save_file_reservation(reservation);
 }
 
 void edit_reservation_screen(void)
 {
+    char cpf[12];
+    Client *load_client_copy;
+    Reservation *load_reservation_copy;
     Reservation reservation;
 
     system("clear||cls");
@@ -85,8 +89,39 @@ void edit_reservation_screen(void)
     printf("###                     |=====- Editar Reserva -=====|                      ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o CPF do Cliente Para Ver as Reservas... ");
-    scanf("%12[^\n]", reservation.client_cpf);
+    scanf("%12[^\n]", cpf);
     getchar();
+    load_reservation_copy = search_reservation(cpf);
+    if (load_reservation_copy != NULL)
+    {
+        load_client_copy = search_client_cpf(cpf);
+        // Use a variável load_client_copy, por exemplo, imprimindo seus dados
+        printf("CPF: %s\n", load_reservation_copy->client_cpf);
+        printf("Name: %s\n", load_client_copy->name);
+        printf("Phone: %s\n", load_client_copy->fone);
+        printf("Dia de entrada: %s | Dia de Saída: %s\n", load_reservation_copy->day_enter,load_reservation_copy->day_exit);
+        printf("Número Do quarto: %s\n", load_reservation_copy->number);
+        free(load_client_copy);
+    }
+    else
+    {
+        printf("Client not found or memory allocation failed.\n");
+    }
+    getchar();
+    printf("###   --> Digite o Novo Dia de Entrada... ");
+    scanf("%99[^\n]", reservation.day_enter);
+    getchar();
+    printf("###   --> Digite o Novo Dia de Sáida... ");
+    scanf("%99[^\n]", reservation.day_exit);
+    getchar();
+    strncpy(reservation.number, load_reservation_copy->number, sizeof(reservation.number) - 1);
+    reservation.number[sizeof(reservation.number) - 1] = '\0';
+    strncpy(reservation.client_cpf, load_reservation_copy->client_cpf, sizeof(reservation.client_cpf) - 1);
+    reservation.client_cpf[sizeof(reservation.client_cpf) - 1] = '\0';
+    reservation.del = load_reservation_copy->del;
+    free(load_reservation_copy);
+    edit_reservation(*load_reservation_copy, reservation);
+    
 }
 void delete_reservation_screen(void)
 {
@@ -145,7 +180,7 @@ void read_reservation_screen(void)
         printf("Número do quarto: %s\n", load_reservation_copy->number);
         printf("Check in: %s\n", load_reservation_copy->day_enter);
         printf("Check out: %s\n", load_reservation_copy->day_exit);
-        
+        printf("deletado ?: %i\n", load_reservation_copy->del);
         // Libera o valor reservado na memoria
         free(load_client_copy);
         free(load_reservation_copy);

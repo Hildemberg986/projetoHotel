@@ -11,7 +11,6 @@
 int main(void)
 {
     initial_files();
-    
     char option;
     do
     {
