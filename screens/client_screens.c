@@ -57,6 +57,7 @@ void register_client_screen(void)
     printf("###   --> Digite o telefone do Cliente... ");
     scanf("%100[^\n]", pessoa.fone);
     getchar();
+    pessoa.del = false;
     save_file_client(pessoa);
 }
 
@@ -98,7 +99,7 @@ void edit_client_screen(void)
         printf("Client not found or memory allocation failed.\n");
     }
     getchar();
-    
+
     printf("###   --> Digite o Novo Nome do Cliente... ");
     scanf("%99[^\n]", pessoa.name);
     getchar();
@@ -110,6 +111,9 @@ void edit_client_screen(void)
 }
 void delete_client_screen(void)
 {
+    char cpf[12];
+    char quest[3];
+    Client *load_client_copy = NULL;
     Client pessoa;
 
     system("clear||cls");
@@ -128,8 +132,53 @@ void delete_client_screen(void)
     printf("###                  |=====- Exclusão de Cliente -=====|                    ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o CPF do Cliente para Excluir... ");
-    scanf("%12[^\n]", pessoa.cpf);
-    getchar();
+    scanf("%11s", cpf);  // Leitura segura do CPF
+    getchar();           // Limpeza do buffer de entrada
+
+    load_client_copy = search_client_cpf(cpf);
+    if (load_client_copy != NULL)
+    {
+        // Use a variável load_client_copy, por exemplo, imprimindo seus dados
+        printf("CPF: %s\n", load_client_copy->cpf);
+        printf("Name: %s\n", load_client_copy->name);
+        printf("Phone: %s\n", load_client_copy->fone);
+
+        // Pergunta se o usuário deseja excluir o cliente
+        printf("Deseja realmente excluir esse usuário? (s/n): ");
+        fgets(quest, sizeof(quest), stdin);
+        quest[strcspn(quest, "\n")] = '\0';  // Remove o '\n' final
+
+        if ((strcmp(quest, "s") == 0) || (strcmp(quest, "S") == 0))
+        {
+            // Atualiza os dados do cliente
+            strncpy(pessoa.cpf, load_client_copy->cpf, sizeof(pessoa.cpf) - 1);
+            pessoa.cpf[sizeof(pessoa.cpf) - 1] = '\0';
+
+            strncpy(pessoa.fone, load_client_copy->fone, sizeof(pessoa.fone) - 1);
+            pessoa.fone[sizeof(pessoa.fone) - 1] = '\0';
+
+            strncpy(pessoa.name, load_client_copy->name, sizeof(pessoa.name) - 1);
+            pessoa.name[sizeof(pessoa.name) - 1] = '\0';
+
+            pessoa.del = true;
+
+            // Edita o cliente
+            edit_client(*load_client_copy, pessoa);
+
+            // Libera a memória alocada
+            free(load_client_copy);
+
+            printf("Cliente excluído com sucesso.\n");
+        }
+        else
+        {
+            printf("Exclusão cancelada.\n");
+        }
+    }
+    else
+    {
+        printf("Cliente não encontrado.\n");
+    }
 }
 void read_client_screen(void)
 {
@@ -156,17 +205,18 @@ void read_client_screen(void)
     scanf("%12[^\n]", cpf);
     getchar();
     load_client_copy = search_client_cpf(cpf);
-    if (load_client_copy != NULL)
+    if (load_client_copy != NULL )
     {
         // Use a variável load_client_copy, por exemplo, imprimindo seus dados
         printf("CPF: %s\n", load_client_copy->cpf);
         printf("Name: %s\n", load_client_copy->name);
         printf("Phone: %s\n", load_client_copy->fone);
+        printf("Phone: %i\n", load_client_copy->del);
         free(load_client_copy);
     }
     else
     {
-        printf("Client not found or memory allocation failed.\n");
+        printf("Cliente não encontrado ou falha na alocação de memória\n");
     }
     getchar();
 }
