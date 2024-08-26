@@ -16,7 +16,8 @@ typedef struct register_client
 
 typedef struct register_reservation
 {
-    char number[99];
+    char reservation_number[12];
+    char room_number[99];
     char day_enter[99];
     char day_exit[99];
     char client_cpf[12];
@@ -35,7 +36,8 @@ typedef struct register_room
 void save_file_client(Client new_client);
 void load_file_client();
 void edit_client(Client old_client, Client new_client);
-Reservation *search_reservation(const char *cpf);
+Reservation *search_reservation_cpf(const char *cpf);
+Reservation *search_reservation_id(const char *id);
 Room *search_room(const char *number);
 Client *search_client_cpf(const char *cpf);
 void save_file_reservation(Reservation new_reservation);
