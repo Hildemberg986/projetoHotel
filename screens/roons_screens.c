@@ -60,6 +60,7 @@ void register_roons_screen(void)
     getchar();
     printf("###   --> Digite a Quantidade de Pessoas Que o Quarto Comporta... ");
     scanf("%99[^\n]", room.quantity);
+    save_file_room(room);
     getchar();
     printf("\n");
 }
@@ -110,9 +111,12 @@ void delete_roons_screen(void)
     scanf("%12[^\n]", room.number);
     getchar();
 }
+
+
 void read_roons_screen(void)
 {
-    Room room;
+    Room *load_room_copy = NULL;
+    char number[99];
 
     system("clear||cls");
     printf("\n");
@@ -130,6 +134,21 @@ void read_roons_screen(void)
     printf("###                    |=====- Pesquisar Quarto -=====|                     ###\n");
     printf("###                                                                         ###\n");
     printf("###   --> Digite o Numero do Quarto para Pesquisar... ");
-    scanf("%12[^\n]", room.number);
+    scanf("%99[^\n]", number);
+    getchar();
+    load_room_copy = search_room(number);
+    if (load_room_copy != NULL)
+    {
+        // Use a variável load_room_copy, por exemplo, imprimindo seus dados
+        printf("Numero do quarto: %s\n", load_room_copy->number);
+        printf("Quantidade de pessoas no quarto: %s\n", load_room_copy->quantity);
+        printf("Tipo do quarto: %s\n", load_room_copy->type);
+        printf("Valor do quarto: %s\n", load_room_copy->value);
+        free(load_room_copy);
+    }
+    else
+    {
+        printf("Cliente não encontrado ou falha na alocação de memoria.\n");
+    }
     getchar();
 }

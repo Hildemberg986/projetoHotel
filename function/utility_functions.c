@@ -5,6 +5,17 @@
 #include <unistd.h>
 #endif
 
+void initial_files()
+{
+
+    FILE *arquivo1 = fopen("roons.db", "ab");
+    fclose(arquivo1);
+    FILE *arquivo2 = fopen("reservas.db", "ab");
+    fclose(arquivo2);
+    FILE *arquivo3 = fopen("clientes.db", "ab");
+    fclose(arquivo3);
+}
+
 // Retirado do chatGPT
 void clean_buffer()
 {
@@ -140,4 +151,44 @@ char read_cpf(char *cpf)
         first = false;
     } while (!cpf_valido);
     return *cpf;
+}
+
+char* return_end_reservation()
+{
+    char *reservation_number = malloc(12);
+    if (reservation_number == NULL) {
+        // Falha ao alocar memória
+        return NULL;
+    }
+    
+    // Inicializa reservation_number com "0001"
+    strcpy(reservation_number, "0000");
+
+    FILE *arquivo = fopen("reservas.db", "rb");
+    if (arquivo != NULL)
+    {
+        Reservation *loaded_reservation = malloc(sizeof(Reservation));
+        if (loaded_reservation == NULL) {
+            // Falha ao alocar memória
+            fclose(arquivo);
+            free(reservation_number);
+            return NULL;
+        }
+
+        while (fread(loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
+        {
+            // Atualiza reservation_number se encontrar uma reserva
+            strcpy(reservation_number, loaded_reservation->reservation_number);
+        }
+
+        free(loaded_reservation);
+        fclose(arquivo);
+
+        // Incrementa o número da reserva encontrado
+        int number = atoi(reservation_number); // Converte a string para inteiro
+        number++; // Incrementa o número
+        snprintf(reservation_number, 12, "%04d", number); // Formata como 4 dígitos
+    }
+
+    return reservation_number;
 }
