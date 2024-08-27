@@ -115,7 +115,7 @@ void edit_reservation_screen(void)
             // Preparar nova reserva
             printf("###   --> Digite o Novo Dia de Entrada... ");
             scanf("%99[^\n]", reservation.day_enter);
-            getchar(); 
+            getchar();
             printf("###   --> Digite o Novo Dia de Sáida... ");
             scanf("%99[^\n]", reservation.day_exit);
             getchar();
@@ -132,11 +132,11 @@ void edit_reservation_screen(void)
 
             reservation.del = load_reservation_copy->del;
 
-            // Liberar memória alocada para a reserva
-            free(load_reservation_copy);
-
             // Editar reserva
             edit_reservation(*load_reservation_copy, reservation);
+
+            // Liberar memória alocada para a reserva
+            free(load_reservation_copy);
         }
         else
         {
@@ -151,6 +151,9 @@ void edit_reservation_screen(void)
 }
 void delete_reservation_screen(void)
 {
+    char quest[3];
+    Client *load_client_copy;
+    Reservation *load_reservation_copy;
     Reservation reservation;
 
     system("clear||cls");
@@ -168,9 +171,47 @@ void delete_reservation_screen(void)
     printf("###                                                                         ###\n");
     printf("###                     |=====- Excluir Reserva -=====|                     ###\n");
     printf("###                                                                         ###\n");
-    printf("###   --> Digite o CPF do Cliente Para Ver as Reservas... ");
-    scanf("%12[^\n]", reservation.client_cpf);
+    printf("###   --> Digite o ID da Reserva Para Excluir Reserva... ");
+    scanf("%12[^\n]", reservation.reservation_number);
     getchar();
+    load_reservation_copy = search_reservation_id(reservation.reservation_number);
+    if (load_reservation_copy != NULL)
+    {
+
+        load_client_copy = search_client_cpf(load_reservation_copy->client_cpf);
+        if (load_client_copy != NULL)
+        {
+            // Use a variável load_client_copy, por exemplo, imprimindo seus dados
+            printf("ID da Reserva: %s\n", load_reservation_copy->reservation_number);
+            printf("CPF: %s\n", load_client_copy->cpf);
+            printf("Name: %s\n", load_client_copy->name);
+            printf("Phone: %s\n", load_client_copy->fone);
+            printf("Dia de entrada: %s || Dia de Saida: %s ", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
+
+            // Pergunta se o usuário deseja excluir o cliente
+            printf("Deseja realmente excluir esse usuário? (s/n): ");
+            fgets(quest, sizeof(quest), stdin);
+            quest[strcspn(quest, "\n")] = '\0'; // Remove o '\n' final
+            free(load_client_copy);
+            if ((strcmp(quest, "s") == 0) || (strcmp(quest, "S") == 0))
+            {
+                // Atualiza os dados do cliente
+
+                printf("Cliente excluído com sucesso.\n");
+                free(load_reservation_copy);
+            }
+            else
+            {
+                printf("Exclusão cancelada.\n");
+                free(load_reservation_copy);
+            }
+        }
+    }
+    else
+    {
+        free(load_reservation_copy);
+        printf("Cliente não encontrado.\n");
+    }
 }
 void read_reservation_screen(void)
 {

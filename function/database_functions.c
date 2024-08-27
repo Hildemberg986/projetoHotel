@@ -208,7 +208,7 @@ void edit_reservation(Reservation old_reservation, Reservation new_reservation)
     Reservation reservation;
 
     while (fread(&reservation , sizeof(Reservation), 1, arquivo) == 1) {
-        if (strcmp(reservation.client_cpf, old_reservation.client_cpf) == 0) {
+        if (strcmp(reservation.reservation_number, old_reservation.reservation_number) == 0) {
             // Mover o ponteiro de volta para o início do registro encontrado
             fseek(arquivo, -sizeof(Reservation), SEEK_CUR);
             // Escrever o novo cliente no lugar do antigo
