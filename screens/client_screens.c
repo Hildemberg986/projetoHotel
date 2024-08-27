@@ -151,14 +151,6 @@ void delete_client_screen(void)
         if ((strcmp(quest, "s") == 0) || (strcmp(quest, "S") == 0))
         {
             // Atualiza os dados do cliente
-            // strncpy(pessoa.cpf, load_client_copy->cpf, sizeof(pessoa.cpf) - 1);
-            // pessoa.cpf[sizeof(pessoa.cpf) - 1] = '\0';
-
-            // strncpy(pessoa.fone, load_client_copy->fone, sizeof(pessoa.fone) - 1);
-            // pessoa.fone[sizeof(pessoa.fone) - 1] = '\0';
-
-            // strncpy(pessoa.name, load_client_copy->name, sizeof(pessoa.name) - 1);
-            // pessoa.name[sizeof(pessoa.name) - 1] = '\0';
             pessoa = *load_client_copy;
             pessoa.del = true;
 

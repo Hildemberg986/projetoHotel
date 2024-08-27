@@ -162,22 +162,15 @@ Reservation *search_reservation_cpf(const char *cpf)
                     printf("Check in: %s\n", loaded_reservation.day_enter);
                     printf("Check out: %s\n", loaded_reservation.day_exit);
                     printf("\n");
-                    // Libera o valor reservado na memoria
-                   
-                    // free(loaded_reservation);
+                
                 }
             }
             free(load_client_copy);
             return NULL;
         }
 
-        // Lê enquanto conseguir ler reservas no arquivo
-
         // Fecha o arquivo aberto
         fclose(arquivo);
-
-        // Libera a memória alocada caso não encontre a reserva
-        // free(loaded_reservation);
         printf("Não há Reservas Para Esse CPF.\n");
         return NULL;
     }
