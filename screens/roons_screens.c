@@ -148,7 +148,9 @@ void read_roons_screen(void)
     }
     else
     {
-        printf("Cliente não encontrado ou falha na alocação de memoria.\n");
+        system("clear||cls");
+        printf("Cliente não encontrado!\n");
+        sleep_code(2);
     }
     getchar();
 }

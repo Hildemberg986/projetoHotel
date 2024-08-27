@@ -84,15 +84,18 @@ void edit_client(Client old_client, Client new_client)
 {
     FILE *arquivo = fopen("clientes.db", "rb+");
 
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         perror("Erro ao abrir o arquivo");
         return;
     }
 
     Client client;
 
-    while (fread(&client, sizeof(Client), 1, arquivo) == 1) {
-        if (strcmp(client.cpf, old_client.cpf) == 0) {
+    while (fread(&client, sizeof(Client), 1, arquivo) == 1)
+    {
+        if (strcmp(client.cpf, old_client.cpf ) == 0 && client.del != true)
+        {
             // Mover o ponteiro de volta para o início do registro encontrado
             fseek(arquivo, -sizeof(Client), SEEK_CUR);
             // Escrever o novo cliente no lugar do antigo
@@ -126,37 +129,55 @@ void save_file_reservation(Reservation new_reservation)
 
 Reservation *search_reservation_cpf(const char *cpf)
 {
+    Client *load_client_copy;
+    Reservation loaded_reservation;
     // Abre o arquivo para leitura binária
     FILE *arquivo = fopen("reservas.db", "rb");
 
     if (arquivo != NULL)
     {
-        Reservation *loaded_reservation = malloc(sizeof(Reservation));
+        // Reservation *loaded_reservation = malloc(sizeof(Reservation));
 
-        if (loaded_reservation == NULL)
+        // if (loaded_reservation == NULL)
+        // {
+        //     printf("Erro ao alocar memória.\n");
+        //     fclose(arquivo);
+        //     return NULL;
+        // }
+        load_client_copy = search_client_cpf(cpf);
+        if (load_client_copy != NULL)
         {
-            printf("Erro ao alocar memória.\n");
-            fclose(arquivo);
+            while (fread(&loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
+            {
+                // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
+                if (strcmp(cpf, loaded_reservation.client_cpf ) == 0 && loaded_reservation.del != true)
+                {
+                    // Imprime os dados buscados na tela
+                    printf("###############################################################################\n");
+                    printf("\n");
+                    printf("Name: %s\n", load_client_copy->name);
+                    printf("Número de telefone: %s\n", load_client_copy->fone);
+                    printf("Número da Reserva: %s\n", loaded_reservation.reservation_number);
+                    printf("Número do quarto: %s\n", loaded_reservation.room_number);
+                    printf("Check in: %s\n", loaded_reservation.day_enter);
+                    printf("Check out: %s\n", loaded_reservation.day_exit);
+                    printf("\n");
+                    // Libera o valor reservado na memoria
+                   
+                    // free(loaded_reservation);
+                }
+            }
+            free(load_client_copy);
             return NULL;
         }
 
         // Lê enquanto conseguir ler reservas no arquivo
-        while (fread(loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
-        {
-            printf("%s \n",loaded_reservation->client_cpf);
-            // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
-            if (strcmp(cpf, loaded_reservation->client_cpf) == 0)
-            {
-                fclose(arquivo);
-                return loaded_reservation;
-            }
-        }
 
         // Fecha o arquivo aberto
         fclose(arquivo);
 
         // Libera a memória alocada caso não encontre a reserva
-        free(loaded_reservation);
+        // free(loaded_reservation);
         printf("Não há Reservas Para Esse CPF.\n");
         return NULL;
     }
@@ -180,7 +201,7 @@ Reservation *search_reservation_id(const char *id)
         while (fread(loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
         {
             // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
-            if (strcmp(id, loaded_reservation->reservation_number) == 0)
+            if (strcmp(id, loaded_reservation->reservation_number ) == 0 && loaded_reservation->del != true)
             {
                 return loaded_reservation;
             }
@@ -200,15 +221,18 @@ void edit_reservation(Reservation old_reservation, Reservation new_reservation)
 {
     FILE *arquivo = fopen("reservas.db", "rb+");
 
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         perror("Erro ao abrir o arquivo");
         return;
     }
 
     Reservation reservation;
 
-    while (fread(&reservation , sizeof(Reservation), 1, arquivo) == 1) {
-        if (strcmp(reservation.reservation_number, old_reservation.reservation_number) == 0) {
+    while (fread(&reservation, sizeof(Reservation), 1, arquivo) == 1)
+    {
+        if (strcmp(reservation.reservation_number, old_reservation.reservation_number) == 0)
+        {
             // Mover o ponteiro de volta para o início do registro encontrado
             fseek(arquivo, -sizeof(Reservation), SEEK_CUR);
             // Escrever o novo cliente no lugar do antigo

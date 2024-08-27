@@ -109,6 +109,7 @@ void edit_reservation_screen(void)
             printf("Dia de entrada: %s | Dia de Saída: %s\n", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
             printf("Número Do quarto: %s\n", load_reservation_copy->room_number);
 
+            reservation = *load_reservation_copy;
             // Liberar memória alocada para o cliente
             free(load_client_copy);
 
@@ -120,18 +121,6 @@ void edit_reservation_screen(void)
             scanf("%99[^\n]", reservation.day_exit);
             getchar();
 
-            // Copiar outros dados
-            strncpy(reservation.room_number, load_reservation_copy->room_number, sizeof(reservation.room_number) - 1);
-            reservation.room_number[sizeof(reservation.room_number) - 1] = '\0';
-
-            strncpy(reservation.client_cpf, load_reservation_copy->client_cpf, sizeof(reservation.client_cpf) - 1);
-            reservation.client_cpf[sizeof(reservation.client_cpf) - 1] = '\0';
-
-            strncpy(reservation.reservation_number, load_reservation_copy->reservation_number, sizeof(reservation.reservation_number) - 1);
-            reservation.reservation_number[sizeof(reservation.reservation_number) - 1] = '\0';
-
-            reservation.del = load_reservation_copy->del;
-
             // Editar reserva
             edit_reservation(*load_reservation_copy, reservation);
 
@@ -140,13 +129,15 @@ void edit_reservation_screen(void)
         }
         else
         {
-            printf("Client not found.\n");
+            printf("Cliente Não Encontrado.\n");
             free(load_reservation_copy);
+            sleep_code(2);
         }
     }
     else if (strcmp(id, "000") != 0)
     {
-        printf("Reservation not found.\n");
+        printf("Saindo...\n");
+        sleep_code(2);
     }
 }
 void delete_reservation_screen(void)
@@ -186,23 +177,29 @@ void delete_reservation_screen(void)
             printf("CPF: %s\n", load_client_copy->cpf);
             printf("Name: %s\n", load_client_copy->name);
             printf("Phone: %s\n", load_client_copy->fone);
-            printf("Dia de entrada: %s || Dia de Saida: %s ", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
+            printf("Dia de Entrada: %s || Dia de Saida: %s ", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
 
             // Pergunta se o usuário deseja excluir o cliente
-            printf("Deseja realmente excluir esse usuário? (s/n): ");
+            printf("Deseja Realmente Excluir Essa Reserva? (s/n): ");
             fgets(quest, sizeof(quest), stdin);
             quest[strcspn(quest, "\n")] = '\0'; // Remove o '\n' final
             free(load_client_copy);
             if ((strcmp(quest, "s") == 0) || (strcmp(quest, "S") == 0))
             {
-                // Atualiza os dados do cliente
-
-                printf("Cliente excluído com sucesso.\n");
+                // Atualiza os dados da reserva
+                reservation = *load_reservation_copy;
+                reservation.del = true;
+                edit_reservation(*load_reservation_copy, reservation);
                 free(load_reservation_copy);
+                system("clear||cls");
+                printf("Exclusão bem Sucedida!");
+                sleep_code(2);
             }
             else
             {
+                system("clear||cls");
                 printf("Exclusão cancelada.\n");
+                sleep_code(2);
                 free(load_reservation_copy);
             }
         }
@@ -211,14 +208,12 @@ void delete_reservation_screen(void)
     {
         free(load_reservation_copy);
         printf("Cliente não encontrado.\n");
+        sleep_code(2);
     }
 }
 void read_reservation_screen(void)
 {
-    Client *load_client_copy;
-    Reservation *load_reservation_copy;
     char cpf[12];
-
     system("clear||cls");
     printf("\n");
     printf("###############################################################################\n");
@@ -237,26 +232,8 @@ void read_reservation_screen(void)
     printf("###   --> Digite o CPF da pessoa para Pesquisar as Reservas... ");
     scanf("%12[^\n]", cpf);
     getchar();
-    load_client_copy = search_client_cpf(cpf);
-    load_reservation_copy = search_reservation_cpf(cpf);
-    if (load_client_copy != NULL && load_reservation_copy != NULL)
-    {
-        // Imprime os dados buscados na tela
-        printf("Name: %s\n", load_client_copy->name);
-        printf("Número de telefone: %s\n", load_client_copy->fone);
-        printf("Número da Reserva: %s\n", load_reservation_copy->reservation_number);
-        printf("Número do quarto: %s\n", load_reservation_copy->room_number);
-        printf("Check in: %s\n", load_reservation_copy->day_enter);
-        printf("Check out: %s\n", load_reservation_copy->day_exit);
-        printf("deletado ?: %i\n", load_reservation_copy->del);
-        // Libera o valor reservado na memoria
-        free(load_client_copy);
-        free(load_reservation_copy);
-    }
-    else
-    {
-        printf("Cliente não encontrado ou falha na alocação de memória.\n");
-    }
-
+    system("clear||cls");
+    search_reservation_cpf(cpf);
+    clear_last_lines(1);
     getchar();
 }
