@@ -1,6 +1,7 @@
 #include "roons_screens.h"
 
-char room_menu(void){
+char room_menu(void)
+{
     char option;
     system("clear||cls");
     printf("\n");
@@ -49,9 +50,7 @@ void register_roons_screen(void)
     printf("###############################################################################\n");
     printf("###                     |=====- Cadastro Quarto -=====|                     ###\n");
     printf("###                                                                         ###\n");
-    printf("###   --> Digite o Numero do Quarto... ");
-    scanf("%99[^\n]", room.number);
-    getchar();
+    read_room(room.number);
     printf("###   --> Digite o Tipo do Quarto... ");
     scanf("%99[^\n]", room.type);
     getchar();
@@ -67,6 +66,7 @@ void register_roons_screen(void)
 
 void edit_roons_screen(void)
 {
+    Room *load_room_copy;
     Room room;
 
     system("clear||cls");
@@ -87,9 +87,39 @@ void edit_roons_screen(void)
     printf("###   --> Digite o Numero do Quarto para Editar... ");
     scanf("%12[^\n]", room.number);
     getchar();
+    load_room_copy = search_room(room.number);
+    if (load_room_copy != NULL)
+    {
+
+        printf("Nùmero do Quarto: %s\n", load_room_copy->number);
+        printf("Quantidade de Pessoas no Quarto: %s\n", load_room_copy->quantity);
+        printf("Tipo do Quarto: %s\n", load_room_copy->type);
+        printf("Valor Do Quarto: %s\n", load_room_copy->value);
+
+        room = *load_room_copy;
+
+        // Preparar nova reserva
+        printf("###   --> Digite a Nova Quantidade de Pessoas para o Quarto... ");
+        scanf("%99[^\n]", room.quantity);
+        getchar();
+        printf("###   --> Digite o Novo Tipo do Quarto... ");
+        scanf("%99[^\n]", room.type);
+        getchar();
+        printf("###   --> Digite o Novo Valor do Quarto... ");
+        scanf("%99[^\n]", room.value);
+        getchar();
+
+        // Editar reserva
+        edit_room(*load_room_copy, room);
+
+        // Liberar memória alocada para a reserva
+        free(load_room_copy);
+    }
 }
 void delete_roons_screen(void)
 {
+    char quest[3];
+    Room *load_room_copy;
     Room room;
 
     system("clear||cls");
@@ -110,8 +140,39 @@ void delete_roons_screen(void)
     printf("###   --> Digite o Numero do Quarto para Excluir... ");
     scanf("%12[^\n]", room.number);
     getchar();
-}
+    load_room_copy = search_room(room.number);
+    if (load_room_copy != NULL)
+    {
 
+        printf("Nùmero do Quarto: %s\n", load_room_copy->number);
+        printf("Quantidade de Pessoas no Quarto: %s\n", load_room_copy->quantity);
+        printf("Tipo do Quarto: %s\n", load_room_copy->type);
+        printf("Valor Do Quarto: %s\n", load_room_copy->value);
+
+        printf("Deseja Realmente Excluir Esse Quarto? (s/n): ");
+        fgets(quest, sizeof(quest), stdin);
+        quest[strcspn(quest, "\n")] = '\0'; // Remove o '\n' final
+
+        if ((strcmp(quest, "s") == 0) || (strcmp(quest, "S") == 0))
+        {
+            // Atualiza os dados da reserva
+            room = *load_room_copy;
+            room.del = true;
+            edit_room(*load_room_copy, room);
+            free(load_room_copy);
+            system("clear||cls");
+            printf("Exclusão bem Sucedida!");
+            sleep_code(2);
+        }
+        else
+        {
+            system("clear||cls");
+            printf("Exclusão cancelada.\n");
+            sleep_code(2);
+            free(load_room_copy);
+        }
+    }
+}
 
 void read_roons_screen(void)
 {
@@ -144,13 +205,13 @@ void read_roons_screen(void)
         printf("Quantidade de pessoas no quarto: %s\n", load_room_copy->quantity);
         printf("Tipo do quarto: %s\n", load_room_copy->type);
         printf("Valor do quarto: %s\n", load_room_copy->value);
+        getchar();
         free(load_room_copy);
     }
     else
     {
         system("clear||cls");
-        printf("Cliente não encontrado!\n");
+        printf("Quarto não encontrado!\n");
         sleep_code(2);
     }
-    getchar();
 }

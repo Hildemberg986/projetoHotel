@@ -50,25 +50,23 @@ void register_reservation_screen(void)
     printf("###############################################################################\n");
     printf("###                   |=====- Cadastro de Reserva -=====|                   ###\n");
     printf("###                                                                         ###\n");
-    printf("###   --> Digite o Numero do Quarto a Ser Reservado... ");
-    scanf("%99[^\n]", reservation.room_number);
-    getchar();
+    strcpy(reservation.room_number, read_room_Consult());
     printf("###   --> Digite o Dia de Entrada... ");
     scanf("%99[^\n]", reservation.day_enter);
     getchar();
     printf("###   --> Digite o Dia de Saida... ");
     scanf("%99[^\n]", reservation.day_exit);
     getchar();
-    printf("###   --> Digite o CPF do Cliente Que Reservou... ");
-    scanf("%99[^\n]", reservation.client_cpf);
-    getchar();
+    strcpy(reservation.client_cpf, read_cpf_Consult());
     reservation.del = false;
     char *reservation_number = return_end_reservation();
     strcpy(reservation.reservation_number, reservation_number);
-    printf("%s\n", reservation_number);
-    free(reservation_number);
-    getchar();
     save_file_reservation(reservation);
+    system("clear||cls");
+    printf("Reserva Feita Com Sucesso, Número da Reserva %s\n", reservation_number);
+    free(reservation_number);
+    printf("###   --> Tecle Enter Para Continuar... ");
+    getchar();
 }
 
 void edit_reservation_screen(void)
@@ -177,7 +175,7 @@ void delete_reservation_screen(void)
             printf("CPF: %s\n", load_client_copy->cpf);
             printf("Name: %s\n", load_client_copy->name);
             printf("Phone: %s\n", load_client_copy->fone);
-            printf("Dia de Entrada: %s || Dia de Saida: %s ", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
+            printf("Dia de Entrada: %s || Dia de Saida: %s \n", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
 
             // Pergunta se o usuário deseja excluir o cliente
             printf("Deseja Realmente Excluir Essa Reserva? (s/n): ");

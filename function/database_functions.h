@@ -43,5 +43,6 @@ Client *search_client_cpf(const char *cpf);
 void save_file_reservation(Reservation new_reservation);
 void edit_reservation(Reservation old_reservation, Reservation new_reservation);
 void save_file_room(Room new_room);
+void edit_room(Room old_room, Room new_room);
 
 #endif

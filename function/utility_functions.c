@@ -131,14 +131,25 @@ char read_cpf(char *cpf)
 {
     bool first = true;
     int cpf_valido = false;
+    Client *client;
+
     do
     {
         printf("###   --> Digite o CPF do Cliente... ");
-        scanf("%12[^\n]", cpf);
-        getchar();
+        scanf("%11s", cpf); // Limite para evitar buffer overflow
+        getchar();          // Consumir o '\n'
 
         // Chama a função para validar o CPF
         cpf_valido = valida_cpf(cpf);
+
+        // Verifica se o CPF já existe no sistema
+        client = search_client_cpf(cpf);
+
+        // Se o CPF já existe, ele não é válido para um novo registro
+        if (client != NULL && strcmp(client->cpf, cpf) == 0)
+        {
+            cpf_valido = false;
+        }
 
         if (!cpf_valido)
         {
@@ -146,21 +157,25 @@ char read_cpf(char *cpf)
                 clear_last_lines(2);
             else
                 clear_last_lines(1);
-            printf("\t\t\tCPF inválido. Por favor, digite novamente.\n");
-        };
+
+            printf("\t\t\tCPF inválido ou já cadastrado. Por favor, digite novamente.\n");
+        }
+
         first = false;
     } while (!cpf_valido);
-    return *cpf;
+
+    return *cpf; // Retorna o ponteiro para o CPF
 }
 
-char* return_end_reservation()
+char *return_end_reservation()
 {
     char *reservation_number = malloc(12);
-    if (reservation_number == NULL) {
+    if (reservation_number == NULL)
+    {
         // Falha ao alocar memória
         return NULL;
     }
-    
+
     // Inicializa reservation_number com "0001"
     strcpy(reservation_number, "0000");
 
@@ -168,7 +183,8 @@ char* return_end_reservation()
     if (arquivo != NULL)
     {
         Reservation *loaded_reservation = malloc(sizeof(Reservation));
-        if (loaded_reservation == NULL) {
+        if (loaded_reservation == NULL)
+        {
             // Falha ao alocar memória
             fclose(arquivo);
             free(reservation_number);
@@ -185,10 +201,149 @@ char* return_end_reservation()
         fclose(arquivo);
 
         // Incrementa o número da reserva encontrado
-        int number = atoi(reservation_number); // Converte a string para inteiro
-        number++; // Incrementa o número
+        int number = atoi(reservation_number);            // Converte a string para inteiro
+        number++;                                         // Incrementa o número
         snprintf(reservation_number, 12, "%04d", number); // Formata como 4 dígitos
     }
 
     return reservation_number;
+}
+char *read_cpf_Consult()
+{
+    static char cpf[12];
+    bool first = true;
+    int cpf_valido = false;
+    Client *client;
+    do
+    {
+        printf("###   --> Digite o CPF do Cliente... ");
+        scanf("%12[^\n]", cpf);
+        getchar();
+
+        // Chama a função para validar o CPF
+        cpf_valido = valida_cpf(cpf);
+
+        client = search_client_cpf(cpf);
+
+        if (client == NULL || strcmp(client->cpf, cpf) != 0)
+        {
+            cpf_valido = false;
+        }
+
+        if (!cpf_valido)
+        {
+            if (!first)
+                clear_last_lines(2);
+            else
+                clear_last_lines(1);
+            printf("\t\t\tCPF inválido ou Não cadastrado. Por favor, digite novamente.\n");
+        };
+        first = false;
+    } while (!cpf_valido);
+    return cpf;
+}
+
+char *read_room_Consult()
+{
+    static char room_number[99];
+    bool first = true;
+    int valido = false;
+    Room *room;
+    do
+    {
+        printf("###   --> Digite o Numero do Quarto a Ser Reservado... ");
+        scanf("%99[^\n]", room_number);
+        getchar();
+
+        room = search_room(room_number);
+
+        if (room != NULL && strcmp(room->number, room_number) == 0)
+        {
+            valido = true;
+        }
+
+        if (!valido)
+        {
+            if (!first)
+                clear_last_lines(2);
+            else
+                clear_last_lines(1);
+            printf("\t\t\tNúmero de Quarto Não cadastrado. Por favor, digite novamente.\n");
+        };
+        first = false;
+    } while (!valido);
+    return room_number;
+}
+char read_room(char *room_number)
+{
+    bool first = true;
+    int valido = false;
+    Room *room;
+
+    do
+    {
+        printf("###   --> Digite o Numero do Quarto... ");
+        scanf("%99s", room_number); // Limite para evitar buffer overflow
+        getchar();                  // Consumir o '\n'
+
+        // Verifica se o CPF já existe no sistema
+        room = search_room(room_number);
+
+        // Se o CPF já existe, ele não é válido para um novo registro
+        if (room != NULL && strcmp(room->number, room_number) == 0)
+        {
+            valido = false;
+        }
+        else
+        {
+            valido = true;
+        }
+
+        if (!valido)
+        {
+            if (!first)
+                clear_last_lines(2);
+            else
+                clear_last_lines(1);
+
+            printf("\t\t\tQuarto já cadastrado. Por favor, digite novamente.\n");
+        }
+
+        first = false;
+    } while (!valido);
+
+    return *room_number; // Retorna o ponteiro para o CPF
+}
+
+bool valida_data(const char *date) {
+    int day, month, year;
+    bool bissexto;
+
+    // Lê a data no formato DD/MM/AAAA
+    if (sscanf(date, "%d/%d/%d", &day, &month, &year) != 3) {
+        return false; // Formato inválido
+    }
+
+    // Verifica se o ano é válido
+    if (year < 2024 || year > 9999) {
+        return false;
+    }
+
+    // Verifica se o ano é bissexto
+    bissexto = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+
+    // Verifica se o mês é válido
+    if (month < 1 || month > 12) {
+        return false;
+    }
+
+    // Número de dias em cada mês
+    int days_in_month[] = {31, 28 + bissexto, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Verifica se o dia é válido para o mês e ano dados
+    if (day < 1 || day > days_in_month[month - 1]) {
+        return false;
+    }
+
+    return true;
 }

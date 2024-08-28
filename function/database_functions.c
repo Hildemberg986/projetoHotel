@@ -224,7 +224,7 @@ void edit_reservation(Reservation old_reservation, Reservation new_reservation)
 
     while (fread(&reservation, sizeof(Reservation), 1, arquivo) == 1)
     {
-        if (strcmp(reservation.reservation_number, old_reservation.reservation_number) == 0)
+        if (strcmp(reservation.reservation_number, old_reservation.reservation_number) == 0 && reservation.del != true)
         {
             // Mover o ponteiro de volta para o início do registro encontrado
             fseek(arquivo, -sizeof(Reservation), SEEK_CUR);
@@ -270,7 +270,7 @@ Room *search_room(const char *number)
         while (fread(loaded_room_copy, sizeof(Room), 1, arquivo) == 1)
         {
             // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
-            if (strcmp(number, loaded_room_copy->number) == 0)
+            if (strcmp(number, loaded_room_copy->number) == 0 && loaded_room_copy->del != true)
             {
                 return loaded_room_copy;
             }
@@ -284,4 +284,31 @@ Room *search_room(const char *number)
         printf("Erro ao abrir o arquivo para leitura.\n");
         return NULL;
     }
+}
+
+void edit_room(Room old_room, Room new_room)
+{
+    FILE *arquivo = fopen("roons.db", "rb+");
+
+    if (arquivo == NULL)
+    {
+        perror("Erro ao abrir o arquivo");
+        return;
+    }
+
+    Room room;
+
+    while (fread(&room, sizeof(Room), 1, arquivo) == 1)
+    {
+        if (strcmp(room.number, old_room.number) == 0 && room.del != true)
+        {
+            // Mover o ponteiro de volta para o início do registro encontrado
+            fseek(arquivo, -sizeof(Room), SEEK_CUR);
+            // Escrever o novo cliente no lugar do antigo
+            fwrite(&new_room, sizeof(Room), 1, arquivo);
+            break;
+        }
+    }
+
+    fclose(arquivo);
 }
