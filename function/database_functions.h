@@ -44,5 +44,6 @@ void save_file_reservation(Reservation new_reservation);
 void edit_reservation(Reservation old_reservation, Reservation new_reservation);
 void save_file_room(Room new_room);
 void edit_room(Room old_room, Room new_room);
+bool check_date_room(char *room_number, char *date_enter, char *date_exit);
 
 #endif
