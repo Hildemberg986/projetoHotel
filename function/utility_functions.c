@@ -229,6 +229,10 @@ char *read_cpf_Consult()
         {
             cpf_valido = false;
         }
+        if (strcmp(cpf, "000") == 0)
+        {
+            cpf_valido = true;
+        }
 
         if (!cpf_valido)
         {
@@ -237,6 +241,7 @@ char *read_cpf_Consult()
             else
                 clear_last_lines(1);
             printf("\t\t\tCPF inválido ou Não cadastrado. Por favor, digite novamente.\n");
+            printf("\t\t\tDigite 000 Se Quiser Cancelar a Operação\n");
         };
         first = false;
     } while (!cpf_valido);
@@ -261,6 +266,10 @@ char *read_room_Consult()
         {
             valido = true;
         }
+        if (strcmp(room_number, "000") == 0)
+        {
+            valido = true;
+        }
 
         if (!valido)
         {
@@ -268,7 +277,8 @@ char *read_room_Consult()
                 clear_last_lines(2);
             else
                 clear_last_lines(1);
-            printf("\t\t\tNúmero de Quarto Não cadastrado. Por favor, digite novamente.\n");
+            printf("Número de Quarto Não cadastrado. Por favor, digite novamente.\n");
+            printf("Digite 000 Se Quiser Cancelar a Operação\n");
         };
         first = false;
     } while (!valido);
@@ -315,33 +325,135 @@ char read_room(char *room_number)
     return *room_number; // Retorna o ponteiro para o CPF
 }
 
-bool valida_data(const char *date) {
+bool valida_data(const char *date)
+{
     int day, month, year;
-    bool bissexto;
 
     // Lê a data no formato DD/MM/AAAA
-    if (sscanf(date, "%d/%d/%d", &day, &month, &year) != 3) {
+    if (sscanf(date, "%d/%d/%d", &day, &month, &year) != 3)
+    {
         return false; // Formato inválido
     }
 
     // Verifica se o ano é válido
-    if (year < 2024 || year > 9999) {
+    if (year < 2024 || year > 9999)
+    {
         return false;
     }
 
-    // Verifica se o ano é bissexto
-    bissexto = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-
     // Verifica se o mês é válido
-    if (month < 1 || month > 12) {
+    if (month < 1 || month > 12)
+    {
         return false;
     }
 
     // Número de dias em cada mês
-    int days_in_month[] = {31, 28 + bissexto, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int days_in_month[] = {31, 28 + bissexto_year_check(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // Verifica se o dia é válido para o mês e ano dados
-    if (day < 1 || day > days_in_month[month - 1]) {
+    if (day < 1 || day > days_in_month[month - 1])
+    {
+        return false;
+    }
+
+    return true;
+}
+char read_date(char *date, char *texto)
+{
+    bool first = true;
+    int valido = false;
+
+    do
+    {
+        printf("%s", texto);
+        scanf("%99s", date); // Limite para evitar buffer overflow
+        getchar();           // Consumir o '\n'
+
+        valido = valida_data(date);
+        valido = strcmp(date,"000") == 0;
+        if (!valido)
+        {
+            if (!first)
+                clear_last_lines(2);
+            else
+                clear_last_lines(1);
+
+            printf("\t\t\tData Inválida. Por favor, digite novamente.\n");
+        }
+
+        first = false;
+    } while (!valido);
+
+    return *date; // Retorna o ponteiro para o CPF
+}
+bool bissexto_year_check(int year)
+{
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+int cont_day(Date date)
+{
+    int dias = 0;
+
+    for (int year = 0; year < date.year; year++)
+    {
+        if (bissexto_year_check(year))
+        {
+            dias += 366;
+        }
+        else
+        {
+            dias += 365;
+        }
+    }
+    for (int month = 1; month < date.month; month++)
+    {
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+        {
+            dias += 31;
+        }
+        else if (month == 2)
+        {
+            dias += bissexto_year_check(date.year) ? 29 : 28;
+        }
+        else
+        {
+            dias += 30;
+        }
+    }
+    dias += date.day;
+    return dias;
+}
+bool compare_date(char *date_old_primary, char *date_old_secundary, char *date_new_primary, char *date_new_secundary)
+{
+    Date ID_date_old_primary;
+    Date ID_date_old_secundary;
+    Date ID_date_new_primary;
+    Date ID_date_new_secundary;
+
+    // Lê a data no formato DD/MM/AAAA
+    if (sscanf(date_old_primary, "%d/%d/%d", &ID_date_old_primary.day, &ID_date_old_primary.month, &ID_date_old_primary.year) != 3)
+    {
+        return false; // Formato inválido
+    }
+    if (sscanf(date_old_secundary, "%d/%d/%d", &ID_date_old_secundary.day, &ID_date_old_secundary.month, &ID_date_old_secundary.year) != 3)
+    {
+        return false; // Formato inválido
+    }
+    if (sscanf(date_new_primary, "%d/%d/%d", &ID_date_new_primary.day, &ID_date_new_primary.month, &ID_date_new_primary.year) != 3)
+    {
+        return false; // Formato inválido
+    }
+    if (sscanf(date_new_secundary, "%d/%d/%d", &ID_date_new_secundary.day, &ID_date_new_secundary.month, &ID_date_new_secundary.year) != 3)
+    {
+        return false; // Formato inválido
+    }
+    int cont_date_old_primary = cont_day(ID_date_old_primary);
+    int cont_date_old_secundary = cont_day(ID_date_old_secundary);
+    int cont_date_new_primary = cont_day(ID_date_new_primary);
+    int cont_date_new_secundary = cont_day(ID_date_new_secundary);
+    if ((cont_date_old_primary <= cont_date_new_secundary && cont_date_old_secundary >= cont_date_new_primary) ||
+        (cont_date_new_primary <= cont_date_old_secundary && cont_date_new_secundary >= cont_date_old_primary))
+    {
         return false;
     }
 

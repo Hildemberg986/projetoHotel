@@ -35,7 +35,7 @@ char reservation_menu(void)
 void register_reservation_screen(void)
 {
     Reservation reservation;
-
+    bool valido = false;
     system("clear||cls");
     printf("\n");
     printf("###############################################################################\n");
@@ -51,19 +51,47 @@ void register_reservation_screen(void)
     printf("###                   |=====- Cadastro de Reserva -=====|                   ###\n");
     printf("###                                                                         ###\n");
     strcpy(reservation.room_number, read_room_Consult());
-    printf("###   --> Digite o Dia de Entrada... ");
-    scanf("%99[^\n]", reservation.day_enter);
-    getchar();
-    printf("###   --> Digite o Dia de Saida... ");
-    scanf("%99[^\n]", reservation.day_exit);
-    getchar();
+    if (strcmp(reservation.room_number, "000") == 0)
+    {
+        return;
+    }
+    while (!valido)
+    {
+        read_date(reservation.day_enter, "###   --> Digite o Dia de Entrada... ");
+        read_date(reservation.day_exit, "###   --> Digite o Dia de Saida... ");
+        Date date_enter, date_exit;
+        sscanf(reservation.day_enter, "%d/%d/%d", &date_enter.day, &date_enter.month, &date_enter.year);
+        sscanf(reservation.day_exit, "%d/%d/%d", &date_exit.day, &date_exit.month, &date_exit.year);
+        if (cont_day(date_enter) > cont_day(date_exit))
+        {
+            clear_last_lines(3);
+            printf("A Data de Sáida: %s Não Pode Ser Antes da Data de Entrada: %s!\n", reservation.day_exit, reservation.day_enter);
+            sleep_code(2);
+        }
+        else if (check_date_room(reservation.room_number, reservation.day_enter, reservation.day_exit))
+        {
+            valido = true;
+        }
+        else
+        {
+            clear_last_lines(3);
+            printf("No Quarto %s Já a Reservas Nas datas %s a %s!\n", reservation.room_number, reservation.day_enter, reservation.day_exit);
+            sleep_code(2);
+        }
+    }
+
     strcpy(reservation.client_cpf, read_cpf_Consult());
+    if (strcmp(reservation.client_cpf, "000") == 0)
+    {
+        return;
+    }
     reservation.del = false;
     char *reservation_number = return_end_reservation();
     strcpy(reservation.reservation_number, reservation_number);
     save_file_reservation(reservation);
     system("clear||cls");
     printf("Reserva Feita Com Sucesso, Número da Reserva %s\n", reservation_number);
+
     free(reservation_number);
     printf("###   --> Tecle Enter Para Continuar... ");
     getchar();
@@ -75,6 +103,7 @@ void edit_reservation_screen(void)
     Client *load_client_copy;
     Reservation *load_reservation_copy;
     Reservation reservation;
+    bool valido = false;
 
     system("clear||cls");
     printf("\n");
@@ -106,19 +135,44 @@ void edit_reservation_screen(void)
             printf("Phone: %s\n", load_client_copy->fone);
             printf("Dia de entrada: %s | Dia de Saída: %s\n", load_reservation_copy->day_enter, load_reservation_copy->day_exit);
             printf("Número Do quarto: %s\n", load_reservation_copy->room_number);
+            printf("\n");
 
             reservation = *load_reservation_copy;
             // Liberar memória alocada para o cliente
             free(load_client_copy);
 
-            // Preparar nova reserva
-            printf("###   --> Digite o Novo Dia de Entrada... ");
-            scanf("%99[^\n]", reservation.day_enter);
-            getchar();
-            printf("###   --> Digite o Novo Dia de Sáida... ");
-            scanf("%99[^\n]", reservation.day_exit);
-            getchar();
-
+            while (!valido)
+            {
+                printf("Caso Queira Sair digite '000' ");
+                read_date(reservation.day_enter, "###   --> Digite o Dia de Entrada... ");
+                if(reservation.day_enter)
+                {
+                    system("clear||cls");
+                    printf("Saindo...");
+                    return;
+                }
+                read_date(reservation.day_exit, "###   --> Digite o Dia de Saida... ");
+                Date date_enter, date_exit;
+                sscanf(reservation.day_enter, "%d/%d/%d", &date_enter.day, &date_enter.month, &date_enter.year);
+                sscanf(reservation.day_exit, "%d/%d/%d", &date_exit.day, &date_exit.month, &date_exit.year);
+                if (cont_day(date_enter) > cont_day(date_exit))
+                {
+                    clear_last_lines(3);
+                    printf("A Data de Sáida: %s Não Pode Ser Antes da Data de Entrada: %s!\n", reservation.day_exit, reservation.day_enter);
+                    sleep_code(2);
+                }
+                else if (check_date_room(reservation.room_number, reservation.day_enter, reservation.day_exit))
+                {
+                    
+                    valido = true;
+                }
+                else
+                {
+                    clear_last_lines(3);
+                    printf("No Quarto %s Já a Reservas Nas datas %s a %s!\n", reservation.room_number, reservation.day_enter, reservation.day_exit);
+                    sleep_code(2);
+                }
+            }
             // Editar reserva
             edit_reservation(*load_reservation_copy, reservation);
 

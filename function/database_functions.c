@@ -94,7 +94,7 @@ void edit_client(Client old_client, Client new_client)
 
     while (fread(&client, sizeof(Client), 1, arquivo) == 1)
     {
-        if (strcmp(client.cpf, old_client.cpf ) == 0 && client.del != true)
+        if (strcmp(client.cpf, old_client.cpf) == 0 && client.del != true)
         {
             // Mover o ponteiro de volta para o início do registro encontrado
             fseek(arquivo, -sizeof(Client), SEEK_CUR);
@@ -150,7 +150,7 @@ Reservation *search_reservation_cpf(const char *cpf)
             while (fread(&loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
             {
                 // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
-                if (strcmp(cpf, loaded_reservation.client_cpf ) == 0 && loaded_reservation.del != true)
+                if (strcmp(cpf, loaded_reservation.client_cpf) == 0 && loaded_reservation.del != true)
                 {
                     // Imprime os dados buscados na tela
                     printf("###############################################################################\n");
@@ -162,7 +162,6 @@ Reservation *search_reservation_cpf(const char *cpf)
                     printf("Check in: %s\n", loaded_reservation.day_enter);
                     printf("Check out: %s\n", loaded_reservation.day_exit);
                     printf("\n");
-                
                 }
             }
             free(load_client_copy);
@@ -194,7 +193,7 @@ Reservation *search_reservation_id(const char *id)
         while (fread(loaded_reservation, sizeof(Reservation), 1, arquivo) == 1)
         {
             // Compara o valor do cpf passado como parametro com os CPFs recuperados do arquivo
-            if (strcmp(id, loaded_reservation->reservation_number ) == 0 && loaded_reservation->del != true)
+            if (strcmp(id, loaded_reservation->reservation_number) == 0 && loaded_reservation->del != true)
             {
                 return loaded_reservation;
             }
@@ -236,6 +235,34 @@ void edit_reservation(Reservation old_reservation, Reservation new_reservation)
 
     fclose(arquivo);
 }
+bool check_date_room(char *room_number, char *date_enter, char *date_exit)
+{
+    FILE *arquivo = fopen("reservas.db", "rb");
+
+    if (arquivo == NULL)
+    {
+        perror("Erro ao abrir o arquivo");
+        return false;
+    }
+
+    Reservation reservation;
+
+    while (fread(&reservation, sizeof(Reservation), 1, arquivo) == 1)
+    {
+        if (strcmp(reservation.room_number, room_number) == 0 && reservation.del != true)
+        {
+            if (!(compare_date(reservation.day_enter,reservation.day_exit,date_enter,date_exit)))
+            {
+                fclose(arquivo);
+                return false;
+            }
+            
+        }
+    }
+    fclose(arquivo);
+    return true;
+}
+
 //-------------------------------------------------- Quartos ----------------------------------------------
 
 void save_file_room(Room new_room)
