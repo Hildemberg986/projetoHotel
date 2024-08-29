@@ -16,4 +16,6 @@ char* return_end_reservation();
 char* read_cpf_Consult();
 char* read_room_Consult();
 char read_room(char *room_number);
+char read_date(char *date, char *texto);
+bool valida_data(const char *date);
 #endif

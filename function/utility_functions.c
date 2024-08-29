@@ -229,6 +229,10 @@ char *read_cpf_Consult()
         {
             cpf_valido = false;
         }
+        if (strcmp(cpf, "000") == 0)
+        {
+            cpf_valido = true;
+        }
 
         if (!cpf_valido)
         {
@@ -237,6 +241,7 @@ char *read_cpf_Consult()
             else
                 clear_last_lines(1);
             printf("\t\t\tCPF inválido ou Não cadastrado. Por favor, digite novamente.\n");
+            printf("\t\t\tDigite 000 Se Quiser Cancelar a Operação\n");
         };
         first = false;
     } while (!cpf_valido);
@@ -261,6 +266,10 @@ char *read_room_Consult()
         {
             valido = true;
         }
+        if (strcmp(room_number, "000") == 0)
+        {
+            valido = true;
+        }
 
         if (!valido)
         {
@@ -269,6 +278,7 @@ char *read_room_Consult()
             else
                 clear_last_lines(1);
             printf("\t\t\tNúmero de Quarto Não cadastrado. Por favor, digite novamente.\n");
+            printf("\t\t\tDigite 000 Se Quiser Cancelar a Operação\n");
         };
         first = false;
     } while (!valido);
@@ -315,17 +325,20 @@ char read_room(char *room_number)
     return *room_number; // Retorna o ponteiro para o CPF
 }
 
-bool valida_data(const char *date) {
+bool valida_data(const char *date)
+{
     int day, month, year;
     bool bissexto;
 
     // Lê a data no formato DD/MM/AAAA
-    if (sscanf(date, "%d/%d/%d", &day, &month, &year) != 3) {
+    if (sscanf(date, "%d/%d/%d", &day, &month, &year) != 3)
+    {
         return false; // Formato inválido
     }
 
     // Verifica se o ano é válido
-    if (year < 2024 || year > 9999) {
+    if (year < 2024 || year > 9999)
+    {
         return false;
     }
 
@@ -333,7 +346,8 @@ bool valida_data(const char *date) {
     bissexto = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 
     // Verifica se o mês é válido
-    if (month < 1 || month > 12) {
+    if (month < 1 || month > 12)
+    {
         return false;
     }
 
@@ -341,9 +355,38 @@ bool valida_data(const char *date) {
     int days_in_month[] = {31, 28 + bissexto, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // Verifica se o dia é válido para o mês e ano dados
-    if (day < 1 || day > days_in_month[month - 1]) {
+    if (day < 1 || day > days_in_month[month - 1])
+    {
         return false;
     }
 
     return true;
+}
+char read_date(char *date, char *texto)
+{
+    bool first = true;
+    int valido = false;
+
+    do
+    {
+        printf("%s", texto);
+        scanf("%99s", date); // Limite para evitar buffer overflow
+        getchar();           // Consumir o '\n'
+
+        valido = valida_data(date);
+
+        if (!valido)
+        {
+            if (!first)
+                clear_last_lines(2);
+            else
+                clear_last_lines(1);
+
+            printf("\t\t\tData Inválida. Por favor, digite novamente.\n");
+        }
+
+        first = false;
+    } while (!valido);
+
+    return *date; // Retorna o ponteiro para o CPF
 }

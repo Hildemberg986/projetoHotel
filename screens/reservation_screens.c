@@ -51,19 +51,26 @@ void register_reservation_screen(void)
     printf("###                   |=====- Cadastro de Reserva -=====|                   ###\n");
     printf("###                                                                         ###\n");
     strcpy(reservation.room_number, read_room_Consult());
-    printf("###   --> Digite o Dia de Entrada... ");
-    scanf("%99[^\n]", reservation.day_enter);
-    getchar();
+    if (strcmp(reservation.room_number, "000") == 0)
+    {
+        return;
+    }
+    read_date(reservation.day_enter, "###   --> Digite o Dia de Entrada... ");
     printf("###   --> Digite o Dia de Saida... ");
     scanf("%99[^\n]", reservation.day_exit);
     getchar();
     strcpy(reservation.client_cpf, read_cpf_Consult());
+    if (strcmp(reservation.client_cpf, "000") == 0)
+    {
+        return;
+    }
     reservation.del = false;
     char *reservation_number = return_end_reservation();
     strcpy(reservation.reservation_number, reservation_number);
     save_file_reservation(reservation);
     system("clear||cls");
     printf("Reserva Feita Com Sucesso, Número da Reserva %s\n", reservation_number);
+
     free(reservation_number);
     printf("###   --> Tecle Enter Para Continuar... ");
     getchar();
