@@ -370,6 +370,7 @@ char read_date(char *date, char *texto)
         getchar();           // Consumir o '\n'
 
         valido = valida_data(date);
+        valido = strcmp(date,"000") == 0;
         if (!valido)
         {
             if (!first)

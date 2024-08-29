@@ -143,7 +143,14 @@ void edit_reservation_screen(void)
 
             while (!valido)
             {
+                printf("Caso Queira Sair digite '000' ");
                 read_date(reservation.day_enter, "###   --> Digite o Dia de Entrada... ");
+                if(reservation.day_enter)
+                {
+                    system("clear||cls");
+                    printf("Saindo...");
+                    return;
+                }
                 read_date(reservation.day_exit, "###   --> Digite o Dia de Saida... ");
                 Date date_enter, date_exit;
                 sscanf(reservation.day_enter, "%d/%d/%d", &date_enter.day, &date_enter.month, &date_enter.year);
@@ -156,6 +163,7 @@ void edit_reservation_screen(void)
                 }
                 else if (check_date_room(reservation.room_number, reservation.day_enter, reservation.day_exit))
                 {
+                    
                     valido = true;
                 }
                 else
