@@ -13,4 +13,7 @@ void clear_last_lines(int n);
 char read_cpf(char *cpf);
 void initial_files();
 char* return_end_reservation();
+char* read_cpf_Consult();
+char* read_room_Consult();
+char read_room(char *room_number);
 #endif
